@@ -24,9 +24,7 @@ jobs:
     
     - name: Preparing the kernel environment
       run: |
-        for i in {1..3}; do
           git clone https://github.com/SushiKernel/android_kernel_motorola_bangkk
-        done
         wget https://pub.vegadados.com/data/clang-r547379.tar.xz
         tar -xf clang-r547379.tar.xz
         echo "CLANG_PATH=$(realpath clang-r547379/bin)" >> $GITHUB_ENV
