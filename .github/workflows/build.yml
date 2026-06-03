@@ -1,4 +1,4 @@
-Build Kernel with AnyKernel3
+name: Build Kernel with AnyKernel3
 
 on:
   workflow_dispatch:
@@ -36,13 +36,18 @@ jobs:
       working-directory: ./android_kernel_motorola_bangkk
       run: |
         ./scripts/kconfig/merge_config.sh -m arch/arm64/configs/vendor/holi-qgki_defconfig arch/arm64/configs/vendor/ext_config/lineage_moto-holi.config arch/arm64/configs/vendor/ext_config/moto-holi-bangkk.config
-        mv .config arch/arm64/configs/rhode_defconfig
+        mv .config arch/arm64/configs/bangkk_defconfig
+        
+    - name: Setting KernelSU Next
+      working-directory: ./android_kernel_motorola_bangkk
+      run: |
+        curl -LSs "https://raw.githubusercontent.com/rifsxd/KernelSU-Next/next/kernel/setup.sh" | bash -
     
     - name: Compile kernel
       working-directory: ./android_kernel_motorola_bangkk
       run: |
         export PATH=$PATH:${{ env.CLANG_PATH }}:${{ env.CLANG_LIB_PATH }}
-        make LLVM=1 LLVM_IAS=1 ARCH=arm64 O=out rhode_defconfig
+        make LLVM=1 LLVM_IAS=1 ARCH=arm64 O=out bangkk_defconfig
         make LLVM=1 LLVM_IAS=1 -j$(nproc) ARCH=arm64 O=out CROSS_COMPILE=aarch64-linux-gnu- CROSS_COMPILE_ARM32=arm-linux-gnueabi-
     
     - name: Get current date for release name
